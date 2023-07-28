@@ -7,7 +7,7 @@ STAGES ?= __init__ os pikvm-repo watchdog rootdelay ro no-audit pikvm __cleanup_
 
 HOSTNAME ?= pikvm
 LOCALE ?= en_US
-TIMEZONE ?= Europe/Moscow
+TIMEZONE ?= Asia/Shanghai
 #REPO_URL ?= http://mirror.yandex.ru/archlinux-arm
 REPO_URL ?= http://de3.mirror.archlinuxarm.org
 BUILD_OPTS ?=

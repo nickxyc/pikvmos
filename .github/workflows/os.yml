@@ -20,16 +20,12 @@ on:
         required: false
         type: string
         default:
-    secrets:
-      DEPLOY_KEY:
-        required: true
 
 
 jobs:
   os:
     runs-on: ubuntu-latest
     env:
-      DEPLOY_KEY: "${{secrets.DEPLOY_KEY}}"
       BOARD: "${{inputs.BOARD}}"
       PLATFORM: "${{inputs.PLATFORM}}"
       SUFFIX: "${{inputs.SUFFIX}}"
@@ -40,13 +36,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Configuring SSH
-        run: |
-          mkdir ~/.ssh
-          chmod 700 ~/.ssh
-          ssh-keyscan -H files.pikvm.org > ~/.ssh/known_hosts
-          echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+      # - name: Configuring SSH
+      #   run: |
+      #     mkdir ~/.ssh
+      #     chmod 700 ~/.ssh
+      #     ssh-keyscan -H files.pikvm.org > ~/.ssh/known_hosts
+      #     echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
 
       - name: Creating config.mk
         run: |
@@ -63,5 +59,9 @@ jobs:
       - name: Making image
         run: make image ZIP=1
 
-      - name: Uploading image
-        run: make upload
+      - name: github upload action
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref,'refs/tags/')
+        with: 
+          files: |
+            images/*.xz
