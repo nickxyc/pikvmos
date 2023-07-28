@@ -64,4 +64,4 @@ jobs:
         if: startsWith(github.ref,'refs/tags/')
         with: 
           files: |
-            images/*.xz
+            images/v0-hdmiusb-rpi3-latest.img.xz
