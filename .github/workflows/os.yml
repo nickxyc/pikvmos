@@ -63,5 +63,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref,'refs/tags/')
         with: 
-          files: |
-            images/v0-hdmiusb-rpi3-latest.img.xz
+          files: images/*
+          draft: true
